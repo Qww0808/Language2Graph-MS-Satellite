@@ -1,0 +1,64 @@
+# 阶段一默认配置
+# 参数值来源于数据集统计分析和方案设计文档推导
+
+# 数据
+data_path: "训练数据集.jsonl"
+max_seq_len: 256
+max_span_width: 20
+
+# 模型 - 编码器
+char_emb_dim: 128
+lstm_hidden_dim: 256
+lstm_num_layers: 2
+lstm_dropout: 0.3
+
+# 模型 - 事件抽取
+span_repr_dim: 256
+span_ffn_hidden: 512
+span_len_emb_dim: 32
+num_event_types: 17
+
+# 模型 - 关系分类
+proj_dim: 128
+dist_emb_dim: 32
+num_dist_buckets: 32
+num_temporal_labels: 5
+num_causal_labels: 4
+
+# 损失权重与 4-in-1 特性
+lambda_T: 1.0
+lambda_C: 1.0
+none_weight_event: 0.1
+none_weight_temporal: 0.1
+none_weight_causal: 0.1
+use_focal_loss: true
+focal_gamma: 2.0
+use_inbetween_context: true
+use_event_nms: true
+nms_iou_threshold: 0.40
+
+# 约束解码
+decode_lambda_C: 1.0
+decode_mu: 5.0
+decode_max_iter: 10
+
+# 训练
+batch_size: 32
+lr: 0.001
+weight_decay: 0.0001
+num_epochs: 40
+early_stop_patience: 5
+grad_clip: 5.0
+seed: 42
+
+# 数据划分 (9.5 : 0.5 划分为 95% 训练集与 5% 验证集)
+train_ratio: 0.95
+val_ratio: 0.05
+test_ratio: 0.0
+
+# 路径
+save_dir: "checkpoints"
+log_dir: "logs"
+
+# 设备
+device: "auto"
